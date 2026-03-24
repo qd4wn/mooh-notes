@@ -60,3 +60,11 @@ These targets map to the underlying `pnpm` workflow:
 - `make build`: create the production build
 - `make start`: start the production server
 - `make clean`: remove the `.next` build output
+
+## Deployment Note
+
+This project has already been deployed on Vercel.
+
+At the moment, it is only accessible through the default `vercel.app` domain. No custom domain, reverse proxy, CDN acceleration, or other access optimization has been configured yet.
+
+As a result, access from some regions may be unavailable or unstable, and a VPN may be required.
