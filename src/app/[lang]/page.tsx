@@ -53,8 +53,6 @@ export default async function HomePage({
               key={`${post.lang}-${post.slug}`}
               lang={typedLang}
               post={post}
-              readMoreLabel={copy.readMore}
-              createdAtLabel={copy.createdAtLabel}
               updatedAtLabel={copy.updatedAtLabel}
             />
           ))}

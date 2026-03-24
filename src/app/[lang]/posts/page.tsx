@@ -33,8 +33,6 @@ export default async function PostsPage({
             key={`${post.lang}-${post.slug}`}
             lang={typedLang}
             post={post}
-            readMoreLabel={copy.readMore}
-            createdAtLabel={copy.createdAtLabel}
             updatedAtLabel={copy.updatedAtLabel}
           />
         ))}

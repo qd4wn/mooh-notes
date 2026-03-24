@@ -1,33 +1,23 @@
 import Link from "next/link";
 
 import type { Language } from "@/lib/i18n";
+import { formatDisplayDate } from "@/lib/date";
 import type { Post } from "@/lib/posts";
 
 type PostCardProps = {
   lang: Language;
   post: Post;
-  readMoreLabel: string;
-  createdAtLabel: string;
   updatedAtLabel: string;
 };
 
-export function PostCard({
-  lang,
-  post,
-  readMoreLabel,
-  createdAtLabel,
-  updatedAtLabel,
-}: PostCardProps) {
+export function PostCard({ lang, post, updatedAtLabel }: PostCardProps) {
+  const updatedAt = formatDisplayDate(post.updatedAt, lang);
+
   return (
     <article className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-      <div className="space-y-1 text-sm text-zinc-500">
-        <p>
-          {createdAtLabel}: {post.createdAt}
-        </p>
-        <p>
-          {updatedAtLabel}: {post.updatedAt}
-        </p>
-      </div>
+      <p className="text-sm text-zinc-500">
+        {updatedAtLabel}: {updatedAt}
+      </p>
       <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
         <Link href={`/${lang}/posts/${post.slug}`}>{post.title}</Link>
       </h2>
@@ -42,12 +32,6 @@ export function PostCard({
           </span>
         ))}
       </div>
-      <Link
-        href={`/${lang}/posts/${post.slug}`}
-        className="mt-6 inline-flex text-sm font-medium text-zinc-950 hover:underline"
-      >
-        {readMoreLabel}
-      </Link>
     </article>
   );
 }

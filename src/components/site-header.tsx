@@ -1,15 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { siteCopy, type Language } from "@/lib/i18n";
 
 type SiteHeaderProps = {
   lang: Language;
-  pathname: string;
 };
 
-export function SiteHeader({ lang, pathname }: SiteHeaderProps) {
+export function SiteHeader({ lang }: SiteHeaderProps) {
   const copy = siteCopy[lang];
+  const pathname = usePathname();
+  const homeHref = `/${lang}`;
+  const postsHref = `/${lang}/posts`;
+  const isHomeActive = pathname === homeHref;
+  const isPostsActive = pathname === postsHref || pathname.startsWith(`${postsHref}/`);
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/85 backdrop-blur-md">
@@ -26,14 +33,24 @@ export function SiteHeader({ lang, pathname }: SiteHeaderProps) {
         <nav className="flex items-center justify-between gap-3 rounded-full border border-zinc-200 bg-zinc-50/90 px-3 py-2 shadow-sm">
           <div className="flex items-center gap-1">
             <Link
-              href={`/${lang}`}
-              className="rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-white hover:text-zinc-950"
+              href={homeHref}
+              aria-current={isHomeActive ? "page" : undefined}
+              className={
+                isHomeActive
+                  ? "rounded-full bg-zinc-200 px-3 py-2 text-sm font-medium text-zinc-950"
+                  : "rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-white hover:text-zinc-950"
+              }
             >
               {copy.homeLink}
             </Link>
             <Link
-              href={`/${lang}/posts`}
-              className="rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-white hover:text-zinc-950"
+              href={postsHref}
+              aria-current={isPostsActive ? "page" : undefined}
+              className={
+                isPostsActive
+                  ? "rounded-full bg-zinc-200 px-3 py-2 text-sm font-medium text-zinc-950"
+                  : "rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-white hover:text-zinc-950"
+              }
             >
               {copy.postsLink}
             </Link>

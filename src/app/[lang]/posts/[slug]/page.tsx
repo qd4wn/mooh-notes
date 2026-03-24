@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TableOfContents } from "@/components/table-of-contents";
+import { formatDisplayDate } from "@/lib/date";
 import { isSupportedLanguage, siteCopy, type Language } from "@/lib/i18n";
 import { getAvailablePostLanguages, getPost, getPostSlugs } from "@/lib/posts";
 
@@ -36,6 +37,8 @@ export default async function PostDetailPage({
   }
 
   const availableLanguages = await getAvailablePostLanguages(slug);
+  const createdAt = formatDisplayDate(post.createdAt, typedLang);
+  const updatedAt = formatDisplayDate(post.updatedAt, typedLang);
 
   return (
     <article className="space-y-8">
@@ -48,10 +51,10 @@ export default async function PostDetailPage({
         </Link>
         <div className="space-y-1 text-sm text-zinc-500">
           <p>
-            {copy.createdAtLabel}: {post.createdAt}
+            {copy.createdAtLabel}: {createdAt}
           </p>
           <p>
-            {copy.updatedAtLabel}: {post.updatedAt}
+            {copy.updatedAtLabel}: {updatedAt}
           </p>
         </div>
         <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">

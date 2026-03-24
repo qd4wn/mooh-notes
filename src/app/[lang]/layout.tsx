@@ -22,7 +22,7 @@ export default async function LanguageLayout({
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <SiteHeader lang={lang as Language} pathname={`/${lang}`} />
+      <SiteHeader lang={lang as Language} />
       <main className="mx-auto w-full max-w-5xl px-6 py-12">{children}</main>
     </div>
   );
