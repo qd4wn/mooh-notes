@@ -27,6 +27,8 @@ export const siteCopy: Record<
     switchLanguage: string;
     backToPosts: string;
     translations: string;
+    createdAtLabel: string;
+    updatedAtLabel: string;
     missingTranslation: string;
   }
 > = {
@@ -42,6 +44,8 @@ export const siteCopy: Record<
     switchLanguage: "切换语言",
     backToPosts: "返回笔记列表",
     translations: "可切换语言",
+    createdAtLabel: "创建时间",
+    updatedAtLabel: "最近更新",
     missingTranslation: "当前笔记暂时没有对应语言版本。",
   },
   en: {
@@ -57,6 +61,8 @@ export const siteCopy: Record<
     switchLanguage: "Switch language",
     backToPosts: "Back to posts",
     translations: "Translations",
+    createdAtLabel: "Created",
+    updatedAtLabel: "Updated",
     missingTranslation:
       "This post does not have a translation in the requested language yet.",
   },

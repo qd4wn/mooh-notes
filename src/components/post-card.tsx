@@ -7,12 +7,27 @@ type PostCardProps = {
   lang: Language;
   post: Post;
   readMoreLabel: string;
+  createdAtLabel: string;
+  updatedAtLabel: string;
 };
 
-export function PostCard({ lang, post, readMoreLabel }: PostCardProps) {
+export function PostCard({
+  lang,
+  post,
+  readMoreLabel,
+  createdAtLabel,
+  updatedAtLabel,
+}: PostCardProps) {
   return (
     <article className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
-      <p className="text-sm text-zinc-500">{post.date}</p>
+      <div className="space-y-1 text-sm text-zinc-500">
+        <p>
+          {createdAtLabel}: {post.createdAt}
+        </p>
+        <p>
+          {updatedAtLabel}: {post.updatedAt}
+        </p>
+      </div>
       <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
         <Link href={`/${lang}/posts/${post.slug}`}>{post.title}</Link>
       </h2>

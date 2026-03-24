@@ -34,6 +34,8 @@ export default async function PostsPage({
             lang={typedLang}
             post={post}
             readMoreLabel={copy.readMore}
+            createdAtLabel={copy.createdAtLabel}
+            updatedAtLabel={copy.updatedAtLabel}
           />
         ))}
       </div>

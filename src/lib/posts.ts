@@ -15,7 +15,8 @@ export type Post = {
   lang: Language;
   title: string;
   summary: string;
-  date: string;
+  createdAt: string;
+  updatedAt: string;
   tags: string[];
   toc: TocItem[];
   content: string;
@@ -24,7 +25,8 @@ export type Post = {
 type PostFrontmatter = {
   title: string;
   summary: string;
-  date: string | Date;
+  createdAt: string | Date;
+  updatedAt: string | Date;
   tags?: string[];
 };
 
@@ -88,7 +90,8 @@ async function readPost(slug: string, lang: Language): Promise<Post | null> {
       lang,
       title: frontmatter.title,
       summary: frontmatter.summary,
-      date: normalizeDate(frontmatter.date),
+      createdAt: normalizeDate(frontmatter.createdAt),
+      updatedAt: normalizeDate(frontmatter.updatedAt),
       tags: frontmatter.tags ?? [],
       toc: extractToc(content),
       content,
@@ -104,8 +107,8 @@ export async function getAllPosts(lang: Language): Promise<Post[]> {
 
   return posts
     .filter((post): post is Post => post !== null)
-    // 这里直接按日期字符串倒序，要求 frontmatter 使用 YYYY-MM-DD 这种可排序格式。
-    .sort((a, b) => b.date.localeCompare(a.date));
+    // 笔记列表按最近更新时间倒序，便于把最近维护的内容排在前面。
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 
 export async function getPost(slug: string, lang: Language): Promise<Post | null> {

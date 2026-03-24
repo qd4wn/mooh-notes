@@ -1,7 +1,8 @@
 ---
 title: C 语言开发中 Makefile 与 CMake 的对比（AI Generated）
 summary: 从上手成本、构建复杂度、跨平台能力和团队协作几个角度，对比在 C 语言项目里使用 Makefile 和 CMake 的实际差异。
-date: 2026-03-23
+createdAt: 2026-03-23
+updatedAt: 2026-03-24
 tags:
   - C
   - Makefile

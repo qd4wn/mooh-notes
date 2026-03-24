@@ -46,7 +46,14 @@ export default async function PostDetailPage({
         >
           {copy.backToPosts}
         </Link>
-        <p className="text-sm text-zinc-500">{post.date}</p>
+        <div className="space-y-1 text-sm text-zinc-500">
+          <p>
+            {copy.createdAtLabel}: {post.createdAt}
+          </p>
+          <p>
+            {copy.updatedAtLabel}: {post.updatedAt}
+          </p>
+        </div>
         <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">
           {post.title}
         </h1>

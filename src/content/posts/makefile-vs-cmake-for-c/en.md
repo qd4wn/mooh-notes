@@ -1,7 +1,8 @@
 ---
 title: Makefile vs CMake for C Programming（AI Generated）
 summary: A practical comparison of Makefile and CMake in C projects, covering setup cost, build complexity, portability, and long-term maintenance.
-date: 2026-03-23
+createdAt: 2026-03-23
+updatedAt: 2026-03-24
 tags:
   - C
   - Makefile
