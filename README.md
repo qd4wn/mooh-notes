@@ -5,10 +5,16 @@ A bilingual notes site built with Next.js, focused on essays and records from da
 ## Development
 
 ```bash
-pnpm dev
+make dev
 ```
 
 Open `http://localhost:3000`.
+
+If you want to see the available project commands:
+
+```bash
+make help
+```
 
 ## Content
 
@@ -36,11 +42,21 @@ tags:
 
 The table of contents is generated automatically from `##` and `###` headings in the Markdown body.
 
-## Scripts
+## Commands
 
 ```bash
-pnpm dev
-pnpm lint
-pnpm build
-pnpm start
+make help
+make dev
+make lint
+make build
+make start
+make clean
 ```
+
+These targets map to the underlying `pnpm` workflow:
+
+- `make dev`: start the Next.js development server
+- `make lint`: run ESLint
+- `make build`: create the production build
+- `make start`: start the production server
+- `make clean`: remove the `.next` build output
