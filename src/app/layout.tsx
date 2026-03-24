@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Mooh Notes",
-  description: "A bilingual blog and study notes site.",
+  description: "Notes and reflections from daily learning and development.",
 };
 
 export default function RootLayout({

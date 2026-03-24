@@ -9,6 +9,7 @@ export default async function HomePage({
 }: {
   params: Promise<{ lang: string }>;
 }) {
+  // App Router 在当前版本里通过异步 params 提供动态路由参数。
   const { lang } = await params;
 
   if (!isSupportedLanguage(lang)) {
@@ -17,6 +18,7 @@ export default async function HomePage({
 
   const typedLang = lang as Language;
   const copy = siteCopy[typedLang];
+  // 首页笔记列表直接从内容层读取，页面本身只负责组织展示。
   const posts = await getAllPosts(typedLang);
 
   return (

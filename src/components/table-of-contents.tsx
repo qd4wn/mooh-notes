@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import type { TocItem } from "@/content/posts";
+import type { TocItem } from "@/lib/post-types";
 
 type TableOfContentsProps = {
   items: TocItem[];

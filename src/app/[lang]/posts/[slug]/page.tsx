@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
 import { TableOfContents } from "@/components/table-of-contents";
 import { isSupportedLanguage, siteCopy, type Language } from "@/lib/i18n";
 import { getAvailablePostLanguages, getPost, getPostSlugs } from "@/lib/posts";
@@ -35,7 +36,6 @@ export default async function PostDetailPage({
   }
 
   const availableLanguages = await getAvailablePostLanguages(slug);
-  const Content = post.Content;
 
   return (
     <article className="space-y-8">
@@ -57,7 +57,7 @@ export default async function PostDetailPage({
       </div>
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start">
         <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-zinc-200">
-          <Content />
+          <MarkdownRenderer content={post.content} />
         </div>
         <TableOfContents items={post.toc} />
       </div>

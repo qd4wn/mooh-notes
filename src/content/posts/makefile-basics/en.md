@@ -1,21 +1,14 @@
-export const metadata = {
-  title: "A Basic Introduction to Makefile with Examples",
-  summary:
-    "A practical introduction to what Makefile is, how targets work, and how a few simple rules can clean up your daily development workflow.",
-  date: "2026-03-23",
-  tags: ["Makefile", "Build Tools", "Workflow"],
-  toc: [
-    { id: "what-is-makefile", title: "What is a Makefile?", level: 2 },
-    { id: "minimal-example", title: "A minimal example", level: 2 },
-    { id: "common-targets", title: "Common target patterns", level: 2 },
-    { id: "why-phony", title: "Why use .PHONY?", level: 2 },
-    { id: "dependencies", title: "Rules with dependencies", level: 2 },
-    { id: "practical-example", title: "A more practical example", level: 2 },
-    { id: "when-to-use", title: "When is Makefile a good fit?", level: 2 },
-  ],
-};
+---
+title: A Basic Introduction to Makefile with Examples（AI Generated）
+summary: A practical introduction to what Makefile is, how targets work, and how a few simple rules can clean up your daily development workflow.
+date: 2026-03-23
+tags:
+  - Makefile
+  - Build Tools
+  - Workflow
+---
 
-<h2 id="what-is-makefile">What is a Makefile?</h2>
+## What is a Makefile?
 
 A `Makefile` is a rule file used together with the `make` command. It was originally common in C and C++ build systems, but it is still widely used today as a lightweight task runner for everyday project commands.
 
@@ -25,12 +18,11 @@ You can think of it as a way to:
 - organize build, test, and cleanup tasks
 - make team workflows more consistent
 
-<Callout title="Tip">
-  If a project already has commands like `pnpm lint`, `pnpm build`, or `docker compose up`,
-  a `Makefile` is often a clean way to provide one consistent entry point.
-</Callout>
+> Tip
+>
+> If a project already has commands like `pnpm lint`, `pnpm build`, or `docker compose up`, a `Makefile` is often a clean way to provide one consistent entry point.
 
-<h2 id="minimal-example">A minimal example</h2>
+## A minimal example
 
 Here is a very small `Makefile`:
 
@@ -48,7 +40,7 @@ When you run `make help`, the commands under the `help` target are executed.
 
 > The indentation before each command must be a tab, not spaces. This is one of the most common Makefile mistakes.
 
-<h2 id="common-targets">Common target patterns</h2>
+## Common target patterns
 
 If you want to standardize common frontend commands, you can write:
 
@@ -76,13 +68,13 @@ make lint
 make build
 ```
 
-<h2 id="why-phony">Why use <code>.PHONY</code>?</h2>
+## Why use `.PHONY`?
 
 For targets like `dev`, `lint`, and `build`, it is usually best to declare them as `.PHONY`, which tells `make` that these names are tasks rather than real files.
 
 Without `.PHONY`, `make` may skip execution if a file with the same name already exists.
 
-<h2 id="dependencies">Rules with dependencies</h2>
+## Rules with dependencies
 
 One of the core strengths of `Makefile` is target dependencies:
 
@@ -102,7 +94,7 @@ When you run `make all`, `make` executes `lint` first and then `build`.
 
 This is useful when you want to define a pre-release or pre-deploy flow.
 
-<h2 id="practical-example">A more practical example</h2>
+## A more practical example
 
 For a Next.js project like this one, a slightly more practical version could look like this:
 
@@ -130,11 +122,11 @@ start:
 
 The real value here is not just shorter commands. It gives the project one consistent command surface as the number of scripts grows.
 
-<Callout title="Practice">
-  In smaller projects, the biggest win from a `Makefile` is often not advanced automation, but making common tasks obvious and repeatable.
-</Callout>
+> Practice
+>
+> In smaller projects, the biggest win from a `Makefile` is often not advanced automation, but making common tasks obvious and repeatable.
 
-<h2 id="when-to-use">When is Makefile a good fit?</h2>
+## When is Makefile a good fit?
 
 It works well when you want to:
 

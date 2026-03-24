@@ -1,21 +1,14 @@
-export const metadata = {
-  title: "Makefile 基本介绍与使用示例",
-  summary:
-    "用一篇入门文章说明 Makefile 的作用、常见目标写法，以及如何通过几个简单规则提升日常开发效率。",
-  date: "2026-03-23",
-  tags: ["Makefile", "构建工具", "工程化"],
-  toc: [
-    { id: "what-is-makefile", title: "什么是 Makefile？", level: 2 },
-    { id: "minimal-example", title: "一个最小示例", level: 2 },
-    { id: "common-targets", title: "常见目标写法", level: 2 },
-    { id: "why-phony", title: "为什么要写 .PHONY", level: 2 },
-    { id: "dependencies", title: "带依赖关系的规则", level: 2 },
-    { id: "practical-example", title: "一个更贴近日常开发的例子", level: 2 },
-    { id: "when-to-use", title: "适合什么时候使用 Makefile？", level: 2 },
-  ],
-};
+---
+title: Makefile 基本介绍与使用示例（AI Generated）
+summary: 用一篇入门笔记说明 Makefile 的作用、常见目标写法，以及如何通过几个简单规则提升日常开发效率。
+date: 2026-03-23
+tags:
+  - Makefile
+  - 构建工具
+  - 工程化
+---
 
-<h2 id="what-is-makefile">什么是 Makefile？</h2>
+## 什么是 Makefile？
 
 `Makefile` 是一份规则文件，通常配合 `make` 命令使用。它最早常用于 C/C++ 项目的编译，但现在也经常被当作一个轻量级任务运行器，用来统一项目里的常用命令。
 
@@ -25,12 +18,11 @@ export const metadata = {
 - 把构建、测试、清理等步骤组织成规则
 - 让团队成员用一致的方式执行开发任务
 
-<Callout title="Tip">
-  如果一个项目里已经有 `pnpm lint`、`pnpm build`、`docker compose up` 这类分散命令，`Makefile`
-  很适合拿来做统一入口。
-</Callout>
+> Tip
+>
+> 如果一个项目里已经有 `pnpm lint`、`pnpm build`、`docker compose up` 这类分散命令，`Makefile` 很适合拿来做统一入口。
 
-<h2 id="minimal-example">一个最小示例</h2>
+## 一个最小示例
 
 下面是一个最基础的 `Makefile`：
 
@@ -48,7 +40,7 @@ help:
 
 > 每条命令前面的缩进必须是 Tab，而不是空格。这是 Makefile 最容易踩的坑之一。
 
-<h2 id="common-targets">常见目标写法</h2>
+## 常见目标写法
 
 如果你希望把前端项目里的常用命令统一起来，可以这样写：
 
@@ -76,13 +68,13 @@ make lint
 make build
 ```
 
-<h2 id="why-phony">为什么要写 <code>.PHONY</code></h2>
+## 为什么要写 `.PHONY`
 
 对于像 `dev`、`lint`、`build` 这种目标，通常建议声明为 `.PHONY`，表示它们不是实际文件名，而是“始终可以执行的任务名”。
 
 如果你不写 `.PHONY`，一旦目录里刚好存在同名文件，`make` 可能会误判目标已经是最新状态，从而跳过执行。
 
-<h2 id="dependencies">带依赖关系的规则</h2>
+## 带依赖关系的规则
 
 `Makefile` 的一个核心能力，是让一个目标依赖另一个目标：
 
@@ -102,7 +94,7 @@ build:
 
 这很适合把“发布前检查”串起来。
 
-<h2 id="practical-example">一个更贴近日常开发的例子</h2>
+## 一个更贴近日常开发的例子
 
 下面这个版本更适合当前这种 Next.js 项目：
 
@@ -130,11 +122,11 @@ start:
 
 这样做的价值不是“少打几个字”，而是把项目约定放到一个统一入口里。随着脚本越来越多，这种统一会很有用。
 
-<Callout title="Practice">
-  对个人项目来说，`Makefile` 最有价值的一点不是复杂编排，而是让一组常用命令有清晰、稳定的名字。
-</Callout>
+> Practice
+>
+> 对个人项目来说，`Makefile` 最有价值的一点不是复杂编排，而是让一组常用命令有清晰、稳定的名字。
 
-<h2 id="when-to-use">适合什么时候使用 Makefile？</h2>
+## 适合什么时候使用 Makefile？
 
 以下场景很适合：
 
