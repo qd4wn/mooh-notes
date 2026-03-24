@@ -40,12 +40,19 @@ export default async function PostDetailPage({
   return (
     <article className="space-y-8">
       <div className="space-y-4">
-        <Link href={`/${typedLang}/posts`} className="text-sm text-zinc-500 hover:text-zinc-900">
+        <Link
+          href={`/${typedLang}/posts`}
+          className="text-sm text-zinc-500 hover:text-zinc-900"
+        >
           {copy.backToPosts}
         </Link>
         <p className="text-sm text-zinc-500">{post.date}</p>
-        <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">{post.title}</h1>
-        <p className="max-w-3xl text-lg leading-8 text-zinc-600">{post.summary}</p>
+        <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">
+          {post.title}
+        </h1>
+        <p className="max-w-3xl text-lg leading-8 text-zinc-600">
+          {post.summary}
+        </p>
         <div className="flex items-center gap-3">
           <span className="text-sm text-zinc-500">{copy.translations}</span>
           <LanguageSwitcher
@@ -56,7 +63,7 @@ export default async function PostDetailPage({
         </div>
       </div>
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start">
-        <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-zinc-200">
+        <div className="rounded-4xl bg-white p-8 shadow-sm ring-1 ring-zinc-200">
           <MarkdownRenderer content={post.content} />
         </div>
         <TableOfContents items={post.toc} />

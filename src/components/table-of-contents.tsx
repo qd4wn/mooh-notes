@@ -12,8 +12,10 @@ export function TableOfContents({ items }: TableOfContentsProps) {
   }
 
   return (
-    <aside className="top-24 rounded-[1.5rem] border border-zinc-200 bg-white p-5 shadow-sm lg:sticky">
-      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">Contents</p>
+    <aside className="top-24 rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm lg:sticky">
+      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">
+        Contents
+      </p>
       <nav className="mt-4">
         <ul className="space-y-2">
           {items.map((item) => (

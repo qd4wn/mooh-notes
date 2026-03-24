@@ -23,14 +23,16 @@ export default async function HomePage({
 
   return (
     <div className="space-y-12">
-      <section className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-zinc-200">
+      <section className="rounded-4xl bg-white p-8 shadow-sm ring-1 ring-zinc-200">
         <p className="text-sm font-medium uppercase tracking-[0.2em] text-zinc-500">
           {copy.tagline}
         </p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-950">
           {copy.siteTitle}
         </h1>
-        <p className="mt-4 max-w-2xl text-lg leading-8 text-zinc-600">{copy.intro}</p>
+        <p className="mt-4 max-w-2xl text-lg leading-8 text-zinc-600">
+          {copy.intro}
+        </p>
       </section>
 
       <section className="space-y-6">
@@ -38,7 +40,10 @@ export default async function HomePage({
           <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">
             {copy.latestPosts}
           </h2>
-          <a href={`/${typedLang}/posts`} className="text-sm text-zinc-500 hover:text-zinc-900">
+          <a
+            href={`/${typedLang}/posts`}
+            className="text-sm text-zinc-500 hover:text-zinc-900"
+          >
             {copy.allPosts}
           </a>
         </div>
