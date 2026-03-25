@@ -1,8 +1,8 @@
 ---
-title: Makefile 基本介绍与使用示例（AI Generated）
+title: Makefile 基本介绍与使用示例
 summary: 用一篇入门笔记说明 Makefile 的作用、常见目标写法，以及如何通过几个简单规则提升日常开发效率。
 createdAt: 2026-03-23
-updatedAt: 2026-03-24
+updatedAt: 2026-03-23
 tags:
   - Makefile
   - 构建工具

@@ -1,8 +1,8 @@
 ---
-title: A Basic Introduction to Makefile with Examples（AI Generated）
+title: A Basic Introduction to Makefile with Examples
 summary: A practical introduction to what Makefile is, how targets work, and how a few simple rules can clean up your daily development workflow.
 createdAt: 2026-03-23
-updatedAt: 2026-03-24
+updatedAt: 2026-03-23
 tags:
   - Makefile
   - Build Tools
