@@ -2,7 +2,7 @@
 title: Django 基础与示例
 summary: 记录基于官方文档学习和使用 Django 框架的一些记录和随笔
 createdAt: 2026-03-24
-updatedAt: 2026-03-24
+updatedAt: 2026-03-30
 tags:
   - Django
   - Python
@@ -240,6 +240,211 @@ admin.site.register(Question)
 admin.site.register(Choice)
 ```
 
+## Part 3~7(暂时略过)
+
 ---
 
-至此基本的 `Django` 相关配置和基础使用已经完成，**Part 3** 以及后续就是做投票相关页面的具体内容，暂时不在这里展开过多...
+至此基本的 `Django` 相关配置和基础使用已经完成，目前执行 `runserver` 后访问 `http://127.0.0.1:8000/polls/` 应该会看到页面显示设置的打印调试信息 "Hello, world. You are at the polls index." （**Part 3 ~ Part7** 以及后续就是做投票相关页面的具体内容，以及 Part8 是 `DJDT` 工具简单介绍）
+
+## Extra: 将 polls 打包为可复用的模块
+
+---
+
+> 将已经编写好的 `polls` demo 应用打包，即所谓的可重用性示例
+
+### 打包前的环境准备
+
+确保用于打包的 `Python` 环境中有需要用到的库
+
+```bash
+python -m pip install setuptools
+python -m pip install build
+
+```
+
+### 具体的打包流程
+
+1. 在之前的项目（`django-intro`）外创建打包的目录 `django-polls`，并将前面写的 `polls/` 目录复制一份到打包目录
+
+```bash
+mkdir django-polls
+
+# 假设打包与之前项目目录同级
+# polls        → django_polls（模块名）
+# django-polls → 包名
+cp django-intro/polls ./django-polls/django_polls -r    # ！一定将polls/ 改为 django_polls/
+
+```
+
+2. 修改 `django-polls/polls/apps.py` 内容大致如下
+
+```py
+# django-polls/polls/app.py
+from django.apps import AppConfig
+
+class PollsConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "django_polls"
+    label = "polls"
+
+```
+
+3. 创建 `django-polls/README.rst` 和 `django-polls/LICENSE` 文件，这里仅测试能否正常打包，留空即可不作过多赘述
+
+4. 编写 `django-polls/pyproject.toml` 用于后续的打包，最简示例如下所示
+
+```toml
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-polls"
+version = "0.1.0"
+description = "A Django app to conduct web-based polls."
+readme = "README.rst"
+license = "BSD-3-Clause"
+requires-python = ">= 3.12"
+dependencies = ["django>=6.0"]
+```
+
+5. 为了包含模板和静态文件，创建一个文件 `django-polls/MANIFEST.in`，内容如下
+
+```in
+recursive-include django_polls/static *
+recursive-include django_polls/templates *
+```
+
+6. 在 `django-polls` 目录下执行 `python -m build` 进行打包，打包前后目录结构应如下所示，对应打包后的 `.whl` 文件和 `.tar.gz` 文件即在 `dist` 目录下
+
+```bash
+# 打包前目录结构
+.
+├── LICENSE
+├── MANIFEST.in
+├── django_polls
+├── pyproject.toml
+└── README.rst
+
+# 打包后目录结构
+.
+├── dist
+├── django_polls.egg-info
+├── LICENSE
+├── MANIFEST.in
+├── django_polls
+├── pyproject.toml
+└── README.rst
+```
+
+### 作为用户库安装 `polls` 应用
+
+1. 准备一个全新/其它的 `django` 项目（直接使用之前的 `python` 虚拟环境将打好的包安装到这个环境中）
+
+```bash
+# 创建新的 django 项目
+mkdir polls-pack-test && cd polls-pack-test
+django-admin startproject testsite .
+
+# 替换为对应的 venv 和 dist 路径
+source [django-intro目录]/.django-intro/bin/activate
+pip install [django-polls目录]/dist/django_polls-0.1.0-py3-none-any.whl
+
+```
+
+2. 修改 `testsite/settings.py`，在 `INSTALLED_APPS` 中添加打包后导入的 `django_polls` 包
+
+```python
+INSTALLED_APPS = [
+    # ... ...
+
+    # 添加打包的 name 名称
+    "django_polls",
+]
+```
+
+3. 修改 `testsite/urls.py`
+
+```python
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("polls/", include("django_polls.urls")),
+]
+```
+
+4. 执行 `migrate` 和 `runserver` 后即可访问对应 "[url]/polls" 访问对应应用（相关业务数据需要重新添加）
+
+```bash
+python manage.py migrate
+
+python manage.py runserver
+
+```
+
+5. 用于该投票应用可以使用下面的 `seed.py` 生成一部分随机数据验证打包正常重用（如果 `django` 项目名发生改变和打包名称改变要对 `seed.py` 进行修改）
+
+```python
+# seed.py
+# 用于数据库中记录的批量生成程序（清除旧数据）
+
+import os
+import django
+import datetime
+import random
+
+# 初始化 Django 环境
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'testsite.settings')
+django.setup()
+
+from django_polls.models import Question, Choice
+from django.utils import timezone
+
+# 清楚旧的数据
+Question.objects.all().delete()
+
+questions_text = [
+    "What is your favorite programming language?",
+    "Which code editor do you use most often?",
+    "What is your primary operating system?",
+    "Do you prefer frontend or backend development?",
+    "How many hours do you code daily?",
+    "Which database do you use most?",
+    "What is your favorite web framework?",
+    "Which version control system do you use?",
+    "Do you prefer tabs or spaces?",
+    "What is your favorite programming paradigm?"
+]
+
+choices_pool = [
+    ["Python", "C++", "Java", "Go"],
+    ["VS Code", "Vim", "PyCharm", "Neovim"],
+    ["Linux", "Windows", "macOS"],
+    ["Frontend", "Backend", "Fullstack"],
+    ["<1 hour", "1-3 hours", "3-6 hours", "6+ hours"],
+    ["MySQL", "PostgreSQL", "SQLite", "MongoDB"],
+    ["Django", "Flask", "Spring", "Express"],
+    ["Git", "SVN", "Mercurial"],
+    ["Tabs", "Spaces"],
+    ["OOP", "Functional", "Procedural"]
+]
+
+# 迭代生成对应的数据记录填入表
+for i in range(len(questions_text)):
+    q = Question.objects.create(
+        question_text=questions_text[i],
+        pub_date=timezone.now() - datetime.timedelta(days=random.randint(0, 5))
+    )
+
+    for choice_text in choices_pool[i]:
+        Choice.objects.create(
+            question=q,
+            choice_text=choice_text,
+            votes=random.randint(0, 100)
+        )
+
+print(f"Data generation completed! Questions count: {Question.objects.count()}")
+
+```
