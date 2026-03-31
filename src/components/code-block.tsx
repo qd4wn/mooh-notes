@@ -16,12 +16,43 @@ function formatLanguageLabel(language?: string) {
   return language.toLowerCase();
 }
 
+function fallbackCopyText(text: string) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "0";
+  textarea.style.left = "0";
+  textarea.style.opacity = "0";
+
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  try {
+    return document.execCommand("copy");
+  } finally {
+    document.body.removeChild(textarea);
+  }
+}
+
 export function CodeBlock({ children, code, language }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
     try {
-      await navigator.clipboard.writeText(code);
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(code);
+        } catch {
+          if (!fallbackCopyText(code)) {
+            throw new Error("Copy failed");
+          }
+        }
+      } else if (!fallbackCopyText(code)) {
+        throw new Error("Copy failed");
+      }
+
       setCopied(true);
 
       window.setTimeout(() => {

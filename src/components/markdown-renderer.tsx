@@ -4,6 +4,7 @@ import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 
 import { CodeBlock } from "@/components/code-block";
+import { extractTextContent } from "@/lib/react-node-text";
 
 type MarkdownRendererProps = {
   content: string;
@@ -57,7 +58,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
         pre: ({ children }) => <>{children}</>,
         code: ({ className, children, ...props }) => {
           const language = className?.replace("language-", "");
-          const code = String(children).replace(/\n$/, "");
+          const code = extractTextContent(children).replace(/\n$/, "");
 
           if (!language) {
             return (

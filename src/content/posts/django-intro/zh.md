@@ -2,7 +2,7 @@
 title: Django 基础与示例
 summary: 记录基于官方文档学习和使用 Django 框架的一些记录和随笔
 createdAt: 2026-03-24
-updatedAt: 2026-03-30
+updatedAt: 2026-03-31
 tags:
   - Django
   - Python
