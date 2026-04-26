@@ -23,11 +23,11 @@ export type Post = {
 };
 
 type PostFrontmatter = {
-  title: string;
-  summary: string;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-  tags?: string[];
+  title?: unknown;
+  summary?: unknown;
+  createdAt?: unknown;
+  updatedAt?: unknown;
+  tags?: unknown;
 };
 
 function normalizeDate(value: string | Date) {
@@ -36,6 +36,30 @@ function normalizeDate(value: string | Date) {
   }
 
   return value;
+}
+
+function isDateValue(value: unknown): value is string | Date {
+  return typeof value === "string" || value instanceof Date;
+}
+
+function parseFrontmatter(data: PostFrontmatter) {
+  if (
+    typeof data.title !== "string" ||
+    typeof data.summary !== "string" ||
+    !isDateValue(data.createdAt) ||
+    !isDateValue(data.updatedAt) ||
+    (data.tags !== undefined && !Array.isArray(data.tags))
+  ) {
+    return null;
+  }
+
+  return {
+    title: data.title,
+    summary: data.summary,
+    createdAt: normalizeDate(data.createdAt),
+    updatedAt: normalizeDate(data.updatedAt),
+    tags: data.tags?.filter((tag): tag is string => typeof tag === "string") ?? [],
+  };
 }
 
 function slugifyHeading(value: string) {
@@ -83,16 +107,20 @@ async function readPost(slug: string, lang: Language): Promise<Post | null> {
     // frontmatter 提供笔记元信息，正文部分交给 Markdown 渲染器处理。
     const source = await fs.readFile(filePath, "utf8");
     const { data, content } = matter(source);
-    const frontmatter = data as PostFrontmatter;
+    const frontmatter = parseFrontmatter(data);
+
+    if (!frontmatter) {
+      return null;
+    }
 
     return {
       slug,
       lang,
       title: frontmatter.title,
       summary: frontmatter.summary,
-      createdAt: normalizeDate(frontmatter.createdAt),
-      updatedAt: normalizeDate(frontmatter.updatedAt),
-      tags: frontmatter.tags ?? [],
+      createdAt: frontmatter.createdAt,
+      updatedAt: frontmatter.updatedAt,
+      tags: frontmatter.tags,
       toc: extractToc(content),
       content,
     };

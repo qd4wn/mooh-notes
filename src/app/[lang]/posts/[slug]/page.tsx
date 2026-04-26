@@ -10,11 +10,15 @@ import { getAvailablePostLanguages, getPost, getPostSlugs } from "@/lib/posts";
 
 export async function generateStaticParams() {
   const slugs = await getPostSlugs();
+  const params = await Promise.all(
+    slugs.map(async (slug) => {
+      const languages = await getAvailablePostLanguages(slug);
 
-  return slugs.flatMap((slug) => [
-    { lang: "zh", slug },
-    { lang: "en", slug },
-  ]);
+      return languages.map((lang) => ({ lang, slug }));
+    }),
+  );
+
+  return params.flat();
 }
 
 export default async function PostDetailPage({
