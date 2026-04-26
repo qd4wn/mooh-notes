@@ -413,16 +413,3 @@ Future improvements could be added in this order:
 
 The most important step is upgrading the parser. Once pipes and redirection are introduced, the internal model may need to evolve from a single `Command` into a command list or execution plan.
 
-## Summary
-
-`lsh-cx` is a compact project for learning both shell fundamentals and C project organization.
-
-Its value is not in having many features, but in making the essential shell mechanics visible:
-
-- how to read user input
-- how to parse input into an argument array
-- why built-ins must run in the current process
-- why external commands need `fork + execvp + waitpid`
-- how to manage per-command dynamic resources in C
-
-After understanding this project, it becomes easier to reason about the execution model behind larger shells such as Bash and Zsh.
